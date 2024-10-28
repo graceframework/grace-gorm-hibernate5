@@ -215,6 +215,10 @@ subprojects { Project subproject ->
         onlyIf { isReleaseVersion }
     }
 
+    tasks.named('compileGroovy') {
+        inputs.files(tasks.named('processResources'))
+    }
+
     checkstyle {
         toolVersion = "10.3.2"
         configDirectory.set(rootProject.file("$rootDir/gradle/checkstyle"))
