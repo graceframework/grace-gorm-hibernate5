@@ -27,8 +27,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.springframework.boot:spring-boot-starter-tomcat"
     implementation project(":gorm-hibernate5-spring-boot")
-    implementation "org.hibernate:hibernate-core-jakarta:$hibernate5Version"
-    implementation "org.hibernate:hibernate-ehcache:$hibernate5Version"
+    implementation "org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion"
+    implementation "org.hibernate:hibernate-ehcache:$hibernateCoreVersion"
 
     runtimeOnly "com.h2database:h2:$h2Version"
     runtimeOnly "org.apache.tomcat:tomcat-jdbc:$tomcatVersion"

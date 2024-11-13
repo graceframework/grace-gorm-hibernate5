@@ -13,7 +13,7 @@ buildscript {
         classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
         classpath "com.github.erdi:webdriver-binaries-gradle-plugin:$webdriverBinariesVersion"
         // classpath "org.gradle:test-retry-gradle-plugin:1.3.1"
-        classpath "org.hibernate:hibernate-core-jakarta:$hibernate5Version"
+        classpath "org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion"
     }
 }
 

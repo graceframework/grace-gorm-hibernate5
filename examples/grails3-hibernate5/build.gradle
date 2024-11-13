@@ -11,8 +11,8 @@ dependencies {
     implementation "org.grails:grails-plugin-rest:$grailsVersion"
     implementation project(":grails-plugin")
 
-    implementation "org.hibernate:hibernate-core-jakarta:$hibernate5Version"
-    implementation "org.hibernate:hibernate-ehcache:$hibernate5Version"
+    implementation "org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion"
+    implementation "org.hibernate:hibernate-ehcache:$hibernateCoreVersion"
 
     runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
     runtimeOnly "com.h2database:h2"

@@ -4,7 +4,7 @@ dependencies {
     api "org.apache.groovy:groovy:$groovyVersion"
     api "org.graceframework:grace-datastore-gorm:$gormVersion"
     api "org.springframework:spring-orm:$springVersion"
-    api("org.hibernate:hibernate-core-jakarta:$hibernate5Version") {
+    api("org.hibernate:hibernate-core-jakarta:$hibernateCoreVersion") {
         exclude group:'org.dom4j', module:'dom4j'
         exclude group:'jakarta.activation', module:'jakarta.activation-api'
         exclude group:'jakarta.annotation', module:'jakarta.annotation-api'
@@ -22,7 +22,7 @@ dependencies {
     runtimeOnly "jakarta.xml.bind:jakarta.xml.bind-api:$jaxbApiVersion"
 
     compileOnly ("net.sf.ehcache:ehcache:2.10.6")
-    compileOnly ("org.hibernate:hibernate-ehcache:$hibernate5Version") {
+    compileOnly ("org.hibernate:hibernate-ehcache:$hibernateCoreVersion") {
         exclude group:'net.sf.ehcache', module:'ehcache'
         exclude group:'org.hibernate', module:'hibernate-core'
     }
@@ -36,7 +36,7 @@ dependencies {
     testImplementation "com.h2database:h2:$h2Version"
 
     testImplementation "net.sf.ehcache:ehcache:2.10.6"
-    testImplementation "org.hibernate:hibernate-ehcache:$hibernate5Version"
+    testImplementation "org.hibernate:hibernate-ehcache:$hibernateCoreVersion"
     
     testImplementation "org.apache.tomcat:tomcat-jdbc:$tomcatVersion"
     testRuntimeOnly "org.springframework:spring-aop:$springVersion"
@@ -44,7 +44,7 @@ dependencies {
     testRuntimeOnly "org.slf4j:slf4j-simple:$slf4jVersion"
     testRuntimeOnly "org.slf4j:jcl-over-slf4j:$slf4jVersion"
     // The groovydoc task needs the Hibernate 4.x jars in the classpath
-    documentation("org.hibernate:hibernate-core-jakarta:${hibernate5Version}")
+    documentation("org.hibernate:hibernate-core-jakarta:${hibernateCoreVersion}")
 }
 
 test {
