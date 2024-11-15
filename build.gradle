@@ -158,7 +158,7 @@ subprojects { Project subproject ->
 
                 afterEvaluate {
                     if(isPluginProject) {
-                        artifact source:"${sourceSets.main.groovy.outputDir}/META-INF/grails-plugin.xml",
+                        artifact source:"${sourceSets.main.groovy.classesDirectory.get()}/META-INF/grails-plugin.xml",
                                 classifier:"plugin",
                                 extension:'xml'
                     }
