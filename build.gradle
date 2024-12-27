@@ -83,7 +83,6 @@ subprojects { Project subproject ->
             testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
         }
 
-        apply from: "${rootProject.projectDir}/gradle/testVerbose.gradle"
         return
     }
 
