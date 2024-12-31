@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2024 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.orm.hibernate.support
 
 import javax.sql.DataSource
@@ -41,10 +56,10 @@ class HibernateDatastoreConnectionSourcesRegistrar implements BeanDefinitionRegi
             String dataSourceBeanName = isDefault ? Settings.SETTING_DATASOURCE : "${Settings.SETTING_DATASOURCE}_$dataSourceName"
 
             if (!registry.containsBeanDefinition(dataSourceBeanName) && shouldConfigureDataSourceBean) {
-                def dataSourceBean = new RootBeanDefinition()
+                RootBeanDefinition dataSourceBean = new RootBeanDefinition()
                 dataSourceBean.setTargetType(DataSource)
                 dataSourceBean.setBeanClass(InstanceFactoryBean)
-                def args = new ConstructorArgumentValues()
+                ConstructorArgumentValues args = new ConstructorArgumentValues()
                 String spel = "#{dataSourceConnectionSourceFactory.create('$dataSourceName', environment).source}".toString()
                 args.addGenericArgumentValue(spel)
                 dataSourceBean.setConstructorArgumentValues(
@@ -58,10 +73,11 @@ class HibernateDatastoreConnectionSourcesRegistrar implements BeanDefinitionRegi
                 String sessionFactoryName = "sessionFactory$suffix"
                 String transactionManagerBeanName = "transactionManager$suffix"
 
-                def sessionFactoryBean = new RootBeanDefinition()
+                RootBeanDefinition sessionFactoryBean = new RootBeanDefinition()
                 sessionFactoryBean.setTargetType(SessionFactory)
                 sessionFactoryBean.setBeanClass(InstanceFactoryBean)
-                def args = new ConstructorArgumentValues()
+                sessionFactoryBean.setDependsOn(dataSourceBeanName)
+                ConstructorArgumentValues args = new ConstructorArgumentValues()
                 args.addGenericArgumentValue("#{hibernateDatastore.getDatastoreForConnection('$dataSourceName').sessionFactory}".toString())
                 sessionFactoryBean.setConstructorArgumentValues(
                         args
@@ -71,10 +87,11 @@ class HibernateDatastoreConnectionSourcesRegistrar implements BeanDefinitionRegi
                         sessionFactoryBean
                 )
 
-                def transactionManagerBean = new RootBeanDefinition()
+                RootBeanDefinition transactionManagerBean = new RootBeanDefinition()
                 transactionManagerBean.setTargetType(PlatformTransactionManager)
                 transactionManagerBean.setBeanClass(InstanceFactoryBean)
-                def txMgrArgs = new ConstructorArgumentValues()
+                transactionManagerBean.setDependsOn(dataSourceBeanName, sessionFactoryName)
+                ConstructorArgumentValues txMgrArgs = new ConstructorArgumentValues()
                 txMgrArgs.addGenericArgumentValue("#{hibernateDatastore.getDatastoreForConnection('$dataSourceName').transactionManager}".toString())
                 transactionManagerBean.setConstructorArgumentValues(
                         txMgrArgs
@@ -96,4 +113,5 @@ class HibernateDatastoreConnectionSourcesRegistrar implements BeanDefinitionRegi
     int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE + 100
     }
+
 }
