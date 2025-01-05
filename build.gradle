@@ -3,7 +3,9 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         if (project.projectVersion.endsWith('-SNAPSHOT')) {
-            maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+            maven {
+                url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            }
         }
     }
     dependencies {
@@ -16,8 +18,8 @@ buildscript {
     }
 }
 
-group "org.graceframework"
-version project.projectVersion
+group = "org.graceframework"
+version = project.projectVersion
 
 ext {
     isTravisBuild = System.getenv().get("TRAVIS") == 'true'
@@ -57,17 +59,19 @@ subprojects { Project subproject ->
     }
 
     if (isPluginProject) {
-        group "org.graceframework.plugins"
+        group = "org.graceframework.plugins"
     }
     else {
-        group "org.graceframework"
+        group = "org.graceframework"
     }
-    version project.rootProject.version
+    version = project.rootProject.version
 
     repositories {
         mavenCentral()
         if (project.projectVersion.endsWith('-SNAPSHOT')) {
-            maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+            maven {
+                url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            }
         }
     }
 
@@ -122,8 +126,6 @@ subprojects { Project subproject ->
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
     }
 
-    apply from: "${rootProject.projectDir}/gradle/testVerbose.gradle"
-
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(17)
@@ -151,7 +153,7 @@ subprojects { Project subproject ->
         publications {
             maven(MavenPublication) {
                 def projectName = subproject.name.split('-')*.capitalize().join(' ')
-                artifactId projectArtifactId
+                artifactId = projectArtifactId
 
                 from components.java
 
@@ -203,7 +205,7 @@ subprojects { Project subproject ->
 
     afterEvaluate {
         signing {
-            required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+            required = isReleaseVersion && gradle.taskGraph.hasTask("publish")
             sign publishing.publications.maven
         }
     }
