@@ -13,10 +13,14 @@ import spock.lang.Specification
 /**
  * Created by graemerocher on 04/05/2017.
  */
-@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class CascadeValidationSpec extends Specification {
 
-    @Shared @AutoCleanup HibernateDatastore hibernateDatastore = new HibernateDatastore(Business, Person, Employee)
+    @Shared Map config = [
+            'dataSource.url':"jdbc:h2:mem:grailsDB;LOCK_TIMEOUT=10000",
+            'dataSource.dbCreate': 'create-drop',
+            'dataSource.dialect': 'org.hibernate.dialect.H2Dialect'
+    ]
+    @Shared @AutoCleanup HibernateDatastore hibernateDatastore = new HibernateDatastore(config, Business, Person, Employee)
 
     @Rollback
     @Issue('https://github.com/grails/grails-data-mapping/issues/926')
@@ -46,7 +50,7 @@ class Business {
     ]
 
 }
-//@Entity
+@Entity
 abstract class Person {
 
 }

@@ -17,10 +17,14 @@ import spock.lang.Specification
  * Created by graemerocher on 04/11/16.
  */
 @ApplyDetachedCriteriaTransform
-@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class TablePerSubClassAndEmbeddedSpec extends Specification {
 
-    @Shared @AutoCleanup HibernateDatastore hibernateDatastore = new HibernateDatastore(Company, Vendor)
+    @Shared Map config = [
+            'dataSource.url':"jdbc:h2:mem:grailsDB;LOCK_TIMEOUT=10000",
+            'dataSource.dbCreate': 'create-drop',
+            'dataSource.dialect': 'org.hibernate.dialect.H2Dialect'
+    ]
+    @Shared @AutoCleanup HibernateDatastore hibernateDatastore = new HibernateDatastore(config, Company, Vendor)
     @Shared PlatformTransactionManager transactionManager = hibernateDatastore.getTransactionManager()
 
     @Rollback
@@ -61,7 +65,7 @@ Vendor.where {
 }
 
 
-//@Entity
+@Entity
 class Company {
     Address address
     String name
