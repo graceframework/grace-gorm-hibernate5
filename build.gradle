@@ -118,12 +118,16 @@ subprojects { Project subproject ->
         documentation "info.picocli:picocli:$picocliVersion"
         documentation "com.github.javaparser:javaparser-core:$javaParserCoreVersion"
 
-        implementation "org.apache.groovy:groovy:$groovyVersion"
-        testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
-        testImplementation("org.spockframework:spock-core:$spockVersion") { transitive = false}
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
-        testImplementation "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+        testImplementation "org.spockframework:spock-core:$spockVersion", {
+            exclude group: "org.junit.platform", module: "junit-platform-engine"
+        }
+        testImplementation "org.apache.groovy:groovy-test-junit5:${groovyVersion}", {
+            exclude group: "org.junit.platform", module: "junit-platform-launcher"
+            exclude group: "org.junit.jupiter", module: "junit-jupiter-engine"
+        }
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+        testImplementation "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
     }
 
     java {
