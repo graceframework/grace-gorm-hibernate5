@@ -25,7 +25,7 @@ class MultipleDataSourceConnectionsSpec extends Specification {
             'hibernate.hbm2ddl.auto': 'create-drop',
             'dataSources.books':[url:"jdbc:h2:mem:books;LOCK_TIMEOUT=10000"],
             'dataSources.moreBooks.url':"jdbc:h2:mem:moreBooks;LOCK_TIMEOUT=10000",
-            'dataSources.moreBooks.hibernate.default_schema':"schema2"
+            'dataSources.moreBooks.hibernate.default_schema':"public"
     ]
 
     @Shared @AutoCleanup HibernateDatastore datastore = new HibernateDatastore(DatastoreUtils.createPropertyResolver(config),Book, Author )
